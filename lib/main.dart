@@ -10,20 +10,38 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int count = 0;
+
   void decrement() {
-    print('Decrement');
+    setState(() {
+      count--;
+    });
+    print(count);
   }
 
+  bool get isEmpty => count == 0;
+
+  bool get isFull => count == 20;
+
   void increment() {
-    print('InDecrement');
+    setState(() {
+      count++;
+    });
+    print(count);
   }
 
   @override
@@ -31,33 +49,27 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black38,
       body: Container(
-        decoration:const BoxDecoration(
-          image: DecorationImage(
-            image: NetworkImage('https://rodrigocosta-dev.com/images/man.jpg'),
-               fit: BoxFit.cover
-               // image: AssetImage('assets/images/business-online-shopping.jpg')
-          )
-        ),
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image:
+                    NetworkImage('https://rodrigocosta-dev.com/images/man.jpg'),
+                fit: BoxFit.cover
+                // image: AssetImage('assets/images/business-online-shopping.jpg')
+                )),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-
           children: [
-            const Text(
-              'Seja Bem Vindo!!!',
-              style: TextStyle(
-                  fontSize: 36, color: Colors.white, fontWeight: FontWeight.w700),
-            ),
-            const Text(
-              'Pode entrar!',
-              style: TextStyle(
-                  fontSize: 36, color: Colors.white, fontWeight: FontWeight.w700),
-            ),
+            Text(isFull ? 'Lotado' : 'Pode entrar!',
+                style: const TextStyle(
+                    fontSize: 36,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700)),
             // const SizedBox(height: 32),
-            const Padding(
-              padding: EdgeInsets.all(32),
+            Padding(
+              padding: const EdgeInsets.all(32),
               child: Text(
-                '0',
-                style: TextStyle(fontSize: 100, color: Colors.white),
+                count.toString(),
+                style: const TextStyle(fontSize: 100, color: Colors.white),
               ),
             ),
             // const SizedBox(height: 32),),
@@ -65,9 +77,11 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 TextButton(
-                  onPressed: decrement,
+                  onPressed: isEmpty ? null : decrement,
                   style: TextButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: isEmpty
+                          ? Colors.white.withOpacity(0.2)
+                          : Colors.white,
                       fixedSize: const Size(100, 100),
                       foregroundColor: Colors.black38,
                       shape: RoundedRectangleBorder(
@@ -79,9 +93,10 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: increment,
+                  onPressed: isFull ? null : increment,
                   style: TextButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor:
+                          isFull ? Colors.white.withOpacity(0.2) : Colors.white,
                       fixedSize: const Size(100, 100),
                       foregroundColor: Colors.black38,
                       shape: RoundedRectangleBorder(
@@ -100,3 +115,11 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+@override
+Widget build(BuildContext context) {
+  return const Placeholder();
+}
+
+//class HomePage extends StatelessWidget {
+//HomePage({super.key});
