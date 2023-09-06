@@ -59,17 +59,19 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(isFull ? 'Lotado' : 'Pode entrar!',
-                style: const TextStyle(
-                    fontSize: 36,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700)),
+            Text(isFull ? 'Lotado'  : 'Pode entrar!',
+              style: const TextStyle(
+                fontSize: 30, color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+                ),
             // const SizedBox(height: 32),
             Padding(
               padding: const EdgeInsets.all(32),
               child: Text(
                 count.toString(),
-                style: const TextStyle(fontSize: 100, color: Colors.white),
+                style:  TextStyle(fontSize: 100,
+                    color: isFull ?  Colors.red :  Colors.white),
               ),
             ),
             // const SizedBox(height: 32),),
